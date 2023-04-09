@@ -1,3 +1,4 @@
+# bash <(curl -sL https://gist.github.com/greyltc/8a93d417a052e00372984ff8ec224703/raw) "https://raw.githubusercontent.com/greyltc/arch-packages/main/draftsight/{PKGBUILD,draftsight.install,draftsight.sh}" -i
 pkgname=draftsight
 pkgver=2019SP3
 pkgrel=3
