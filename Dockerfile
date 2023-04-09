@@ -22,7 +22,7 @@ chown -R archie /packages /out
 cd /packages
 for d in */ ; do
   pushd "${d}"
-  sudo -u archie paru --upgrade -s --noconfirm
+  sudo -u archie paru -U --noconfirm
   mv *.pkg.zst /out/.
   popd
 done
