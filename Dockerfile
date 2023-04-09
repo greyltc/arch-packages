@@ -17,6 +17,8 @@ sudo -u archie bash makepkg-url.sh "https://aur.archlinux.org/cgit/aur.git/plain
 
 mkdir -p /out
 
+chown -R archie /packages /out
+
 cd /packages
 for d in */ ; do
   pushd "${d}"
