@@ -77,6 +77,7 @@ jobs:
           echo "Release Done."
           ASSET_UL_URL=$(cat rel_resp.json | jq --raw-output '.upload_url' | sed "s|{?.*||g")
           ASSET_UL_URL="${ASSET_UL_URL}?name=asset"
+          rm -rf out/provenance.json  # what's this?
           for ASSET_FILE in out/*
           do
             # upload asset
