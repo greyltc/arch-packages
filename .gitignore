@@ -3,3 +3,4 @@ src/
 *.tar.zst
 .SRCINFO
 out/
+bot_info.json
