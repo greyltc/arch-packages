@@ -7,32 +7,6 @@ arch=('x86_64')
 url="https://web.archive.org/web/20191028094853/https://www.3ds.com/products-services/draftsight-cad-software/download-draftsight/"
 options=('!strip')
 license=('custom')
-depends=(
-	'alsa-lib'
-	'desktop-file-utils'
-	'fontconfig'
-	'gcc-libs'
-	'glib2'
-	'gtk2'
-	'libfaketime'
-	'libcups'
-	'libgl'
-	'pcre'
-	'libice'
-	'libmariadbclient'
-	'libmng'
-	'libpng12'
-	'libsm'
-	'libx11'
-	'libxext'
-	'libxrender'
-	'libxslt'
-	'postgresql-libs'
-	'qt5-base'
-	'qt5-x11extras'
-	'zlib'
-	'firejail'
-)
 source=(
 	"${pkgname}-${pkgver}.rpm"::"https://web.archive.org/web/20200602160014/http://dl-ak.solidworks.com/nonsecure/draftsight/2019SP3/draftSight.rpm"
         "draftsight.sh"
@@ -51,29 +25,55 @@ prepare() {
 }
 
 package() {
-  # the program
-  cp -a opt "${pkgdir}"
+	depends=(
+		'alsa-lib'
+		'desktop-file-utils'
+		'fontconfig'
+		'gcc-libs'
+		'glib2'
+		'gtk2'
+		'libfaketime'
+		'libcups'
+		'libgl'
+		'pcre'
+		'libice'
+		'libmariadbclient'
+		'libmng'
+		'libpng12'
+		'libsm'
+		'libx11'
+		'libxext'
+		'libxrender'
+		'libxslt'
+		'postgresql-libs'
+		'qt5-base'
+		'qt5-x11extras'
+		'zlib'
+		'firejail'
+	)
 
-  # our launcher
-  install -Dm755 draftsight.sh "${pkgdir}/usr/bin/${pkgname}"
+	# the program
+	cp -a opt "${pkgdir}"
 
-  # the EULA
-  install -Dm644 opt/dassault-systemes/DraftSight/Eula/english/eula.htm "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.html
+	# our launcher
+	install -Dm755 draftsight.sh "${pkgdir}/usr/bin/${pkgname}"
 
-  # some icons
-  for size in "16x16" "32x32" "48x48" "64x64" "128x128"
-  do
-    install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/program.png "${pkgdir}/usr/share/icons/hicolor/${size}/apps/dassault-systemes.draftsight.png"
-    install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dwg.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dwg.png"
-    install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dxf.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dxf.png"
-    install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dwt.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dwt.png"
-  done
+	# the EULA
+	install -Dm644 opt/dassault-systemes/DraftSight/Eula/english/eula.htm "${pkgdir}"/usr/share/licenses/${pkgname}/LICENSE.html
 
-  # mime stuff
-  install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dwg.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dwg.xml"
-  install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dxf.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dxf.xml"
-  install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dwt.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dwt.xml"
+	# some icons
+	for size in "16x16" "32x32" "48x48" "64x64" "128x128"; do
+		install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/program.png "${pkgdir}/usr/share/icons/hicolor/${size}/apps/dassault-systemes.draftsight.png"
+		install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dwg.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dwg.png"
+		install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dxf.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dxf.png"
+		install -Dm644 opt/dassault-systemes/DraftSight/Resources/pixmaps/${size}/file-dwt.png "${pkgdir}/usr/share/icons/hicolor/${size}/mimetypes/file-dwt.png"
+	done
 
-  # .desktop file
-  install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop "${pkgdir}/usr/share/applications/dassault-systemes.draftsight.desktop"
+	# mime stuff
+	install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dwg.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dwg.xml"
+	install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dxf.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dxf.xml"
+	install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight-dwt.xml "${pkgdir}/usr/share/mime/application/vnd.dassault-systemes_draftsight-dwt.xml"
+
+	# .desktop file
+	install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop "${pkgdir}/usr/share/applications/dassault-systemes.draftsight.desktop"
 }
