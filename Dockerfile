@@ -22,6 +22,8 @@ chown --recursive archie /packages /out
 cd /packages
 for d in */ ; do
   pushd "${d}"
+  sudo --user=archie makepkg --allsource
+  mv *.src.tar.gz /out/.
   sudo --user=archie paru --upgrade --noconfirm
   mv *.pkg.tar.zst /out/.
   popd
