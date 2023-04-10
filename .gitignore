@@ -6,3 +6,4 @@ src/
 out/
 bot_info.json
 *.part
+custompkgs/

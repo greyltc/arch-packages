@@ -29,7 +29,7 @@ main() {
 			runuser -u archie -- paru --upgrade --noconfirm
 			clean_orphans
 			mv *.pkg.tar.zst /out/.
-			sudo --user=archie --chdir=~ rm --recursive --force ~/.cargo
+			sudo --user=archie --chdir=~ bash -c "rm --recursive --force ~/.cargo"
 		else
 			echo "Skipping ${d}"
 		fi
@@ -39,7 +39,7 @@ main() {
 
 install_paru() {
 	pushd /home/archie
-	runuser -u archie -- curl --silent --location --remote-name https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=paru-bin
+	runuser -u archie -- curl --silent --location --remote-name https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=paru
 	this_ver=$(getver)
 	runuser -u archie -- makepkg-url "file:///home/archie/PKGBUILD" --syncdeps --install --clean --noconfirm --rmdeps
 	rm PKGBUILD
