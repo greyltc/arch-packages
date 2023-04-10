@@ -7,4 +7,4 @@ cd arch-packages
 docker buildx build --progress plain --target build --tag built --load .
 docker buildx build --progress plain --target export --output type=local,dest=out .
 ```
-results are in out/
+build artifacts will have now appeared in `out/`
