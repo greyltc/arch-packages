@@ -1,8 +1,8 @@
 .github/
 Dockerfile
 .dockerignore
-.gitignore
-.git/
+#.gitignore
+#.git/
 out/
 README.md
 */src/

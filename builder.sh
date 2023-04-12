@@ -4,7 +4,9 @@ set -o pipefail
 
 main() {
 	pacman-key --init
-	pacman --sync --refresh
+	pacman --sync --refresh --noconfirm archlinux-keyring
+	pacman --sync --refresh --sysupgrade --noconfirm git
+	git config --global --add safe.directory /packages
 
 	useradd --create-home archie
 	echo "archie ALL=(ALL) NOPASSWD: /usr/bin/pacman" > "/etc/sudoers.d/allow_archie_to_pacman"
@@ -13,17 +15,33 @@ main() {
 	curl --silent --location https://gist.githubusercontent.com/greyltc/8a93d417a052e00372984ff8ec224703/raw/7b438370dbb63683849c7ed993f54a47ffe4d7dd/makepkg-url.sh > /usr/bin/makepkg-url
         chmod +x /usr/bin/makepkg-url
 
-	mkdir --parents /out
+	mkdir --parents /out /home/srcpackages
+	chown --recursive archie /packages /out /home/custompkgs /home/srcpackages
 
-	chown --recursive archie /packages /out
+	runuser -u archie -- repo-add /home/custompkgs/custom.db.tar.gz
+	sed -i 's,^#PKGDEST=/home/packages,PKGDEST=/home/custompkgs,' /etc/pacman.conf
+	sed -i 's,^#SRCPKGDEST=/home/srcpackages,SRCPKGDEST=/home/srcpackages,' /etc/pacman.conf
+	sed -i 's,^#[custom],[custom],' /etc/pacman.conf
+	sed -i 's,^#SigLevel = Optional TrustAll,SigLevel = Optional TrustAll,' /etc/pacman.conf
+	sed -i 's,^#Server = file:///home/custompkgs ,Server = file:///home/custompkgs ,' /etc/pacman.conf
 
-	install_paru
+	runuser -u archie -- makepkg-url "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=paru" --syncdeps --install --clean --noconfirm --rmdeps
+	clean_orphans
+	#install_paru
+
+	runuser -u archie -- makepkg-url "https://aur.archlinux.org/cgit/aur.git/plain/{PKGBUILD,aurutils.changelog,aurutils.install}?h=aurutils" --syncdeps --install --clean --noconfirm --rmdeps
+	clean_orphans
+
+	echo "lsing"
+	ls -al /home/custompkgs
+	ls -al /home/srcpackages
 
 	cd /packages
+	find -name PKGBUILD -execdir sh -c 'makepkg --printsrcinfo > .SRCINFO' \;
 	for d in */ ; do
 		pushd "${d}"
 		if test ! -f DONTBUILD -a -f PKGBUILD; then
-			this_ver=$(getver)
+			#this_ver=$(getver)
 			runuser -u archie -- makepkg --allsource
 			mv *.src.tar.gz /out/.
 			runuser -u archie -- paru --upgrade --noconfirm
@@ -35,6 +53,7 @@ main() {
 		fi
 		popd
 	done
+	git clean -ffxd
 }
 
 install_paru() {
