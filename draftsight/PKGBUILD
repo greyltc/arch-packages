@@ -12,7 +12,7 @@ source=(
         "draftsight.sh"
 )
 sha256sums=('fd0567969da3b011d463e105e7b25a957646a7fbe7bda32eb08b18098886b08b'
-            '3825a8619191866f9bb04113151de82abbf09f459bd1457eb97ddc3d3ab3fa2b')
+            '4551ace36fe0d7639e94bdd23bcafcc72b7ddd680c2a680e01ca3f74d02ca1d2')
 install=draftsight.install
 
 prepare() {
