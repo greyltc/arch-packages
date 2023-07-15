@@ -37,16 +37,17 @@ main() {
 	ls -al /home/srcpackages
 
 	cd /packages
-	find -name PKGBUILD -execdir sh -c 'makepkg --printsrcinfo > .SRCINFO' \;
+	find -name PKGBUILD -execdir sh -c 'runuser -u archie -- makepkg --printsrcinfo > .SRCINFO' \;
 	for d in */ ; do
 		pushd "${d}"
 		if test ! -f DONTBUILD -a -f PKGBUILD; then
 			#this_ver=$(getver)
-			runuser -u archie -- makepkg --allsource
+			runuser -u archie -- makepkg --allsource  # --sign
 			mv *.src.tar.gz /out/.
 			runuser -u archie -- paru --upgrade --noconfirm
 			clean_orphans
 			mv *.pkg.tar.zst /out/.
+			#mv *.pkg.tar.zst.sig /out/.
 			sudo --user=archie --chdir=~ bash -c "rm --recursive --force ~/.cargo"
 		else
 			echo "Skipping ${d}"
