@@ -15,43 +15,44 @@ sha256sums=('fd0567969da3b011d463e105e7b25a957646a7fbe7bda32eb08b18098886b08b'
             '4551ace36fe0d7639e94bdd23bcafcc72b7ddd680c2a680e01ca3f74d02ca1d2')
 install=draftsight.install
 
+
+depends=(
+alsa-lib
+desktop-file-utils
+fontconfig
+gcc-libs
+glib2
+gtk2
+libfaketime
+libcups
+libgl
+pcre
+libice
+libmariadbclient
+libmng
+libpng12
+libsm
+libx11
+libxext
+libxrender
+libxslt
+postgresql-libs
+qt5-base
+qt5-x11extras
+zlib
+firejail
+)
+
 prepare() {
-  # use our launcher in the .desktop file
-  sed -i 's|^Exec="/opt/dassault-systemes/DraftSight/Linux/DraftSight"|Exec=draftsight|g' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
-  
-  # fix mime type spec. in the .desktop file
-  sed -i 's,application-vnd,application/vnd,g' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
-  sed -i 's,^MimeType.*,&;,' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
+	# use our launcher in the .desktop file
+	sed -i 's|^Exec="/opt/dassault-systemes/DraftSight/Linux/DraftSight"|Exec=draftsight|g' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
+
+	# fix mime type spec. in the .desktop file
+	sed -i 's,application-vnd,application/vnd,g' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
+	sed -i 's,^MimeType.*,&;,' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
 }
 
 package() {
-	depends=(
-		'alsa-lib'
-		'desktop-file-utils'
-		'fontconfig'
-		'gcc-libs'
-		'glib2'
-		'gtk2'
-		'libfaketime'
-		'libcups'
-		'libgl'
-		'pcre'
-		'libice'
-		'libmariadbclient'
-		'libmng'
-		'libpng12'
-		'libsm'
-		'libx11'
-		'libxext'
-		'libxrender'
-		'libxslt'
-		'postgresql-libs'
-		'qt5-base'
-		'qt5-x11extras'
-		'zlib'
-		'firejail'
-	)
-
 	# the program
 	cp -a opt "${pkgdir}"
 
