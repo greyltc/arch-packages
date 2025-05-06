@@ -1,3 +1,4 @@
+[![CI](https://github.com/greyltc/arch-packages/actions/workflows/build.yml/badge.svg)](https://github.com/greyltc/arch-packages/actions/workflows/build.yml)
 # arch-packages
 Packages for Arch Linux
 ## Building locally
