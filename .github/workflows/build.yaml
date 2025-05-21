@@ -1,0 +1,20 @@
+name: Build and Release Arch Linux packages
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      ACTIONS_BOT_NAME: github-actions[bot]
+    steps:
+      - id: bs
+        uses: greyltc/build-arch-packages-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
