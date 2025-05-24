@@ -1,7 +1,7 @@
 # bash <(curl -sL https://raw.githubusercontent.com/greyltc/build-arch-packages-action/7a7acb293a10165a479ed812f8e5be4bc12ff630/makepkg-url.sh) "https://raw.githubusercontent.com/greyltc/arch-packages/main/draftsight/{PKGBUILD,draftsight.install,draftsight.sh}" --install
 pkgname=draftsight
 pkgver=2019SP3
-pkgrel=5
+pkgrel=6
 pkgdesc="Freeware CAD software for DWG/DXF files."
 arch=('x86_64')
 url="https://web.archive.org/web/20191028094853/https://www.3ds.com/products-services/draftsight-cad-software/download-draftsight/"
