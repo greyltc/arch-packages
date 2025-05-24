@@ -1,4 +1,4 @@
-# bash <(curl -sL https://gist.github.com/greyltc/8a93d417a052e00372984ff8ec224703/raw) "https://raw.githubusercontent.com/greyltc/arch-packages/main/draftsight/{PKGBUILD,draftsight.install,draftsight.sh}" -i
+# bash <(curl -sL https://raw.githubusercontent.com/greyltc/build-arch-packages-action/7a7acb293a10165a479ed812f8e5be4bc12ff630/makepkg-url.sh) "https://raw.githubusercontent.com/greyltc/arch-packages/main/draftsight/{PKGBUILD,draftsight.install,draftsight.sh}" --install
 pkgname=draftsight
 pkgver=2019SP3
 pkgrel=5
@@ -14,7 +14,6 @@ source=(
 sha256sums=('fd0567969da3b011d463e105e7b25a957646a7fbe7bda32eb08b18098886b08b'
             '4551ace36fe0d7639e94bdd23bcafcc72b7ddd680c2a680e01ca3f74d02ca1d2')
 install=draftsight.install
-
 
 depends=(
 alsa-lib
