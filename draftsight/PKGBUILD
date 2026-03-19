@@ -1,7 +1,7 @@
 # bash <(curl -sL https://raw.githubusercontent.com/greyltc/build-arch-packages-action/7a7acb293a10165a479ed812f8e5be4bc12ff630/makepkg-url.sh) "https://raw.githubusercontent.com/greyltc/arch-packages/main/draftsight/{PKGBUILD,draftsight.install,draftsight.sh}" --install
 pkgname=draftsight
 pkgver=2019SP3
-pkgrel=6
+pkgrel=7
 pkgdesc="Freeware CAD software for DWG/DXF files."
 arch=('x86_64')
 url="https://web.archive.org/web/20191028094853/https://www.3ds.com/products-services/draftsight-cad-software/download-draftsight/"
@@ -11,36 +11,39 @@ source=(
 	"${pkgname}-${pkgver}.rpm"::"https://web.archive.org/web/20200602160014/http://dl-ak.solidworks.com/nonsecure/draftsight/2019SP3/draftSight.rpm"
         "draftsight.sh"
 )
-sha256sums=('fd0567969da3b011d463e105e7b25a957646a7fbe7bda32eb08b18098886b08b'
-            '4551ace36fe0d7639e94bdd23bcafcc72b7ddd680c2a680e01ca3f74d02ca1d2')
+b2sums=('a16a1fb12ffb454d81d046de199d83f93982b5de974e6486ac4dd3854444d09cb0ea90816f5a38c3b45a6f4ad295b045309a2d096891f0308a302c5966f309cf'
+        '53d45aec01eb28996e68f6304bf772be2a0fca5cf988e35a3ef5977c19cda326a1cbfc2eaca74254fedd738fb992700fe87756c52dda6423cea461f52e6adcd4')
 install=draftsight.install
 
 depends=(
 alsa-lib
-desktop-file-utils
 fontconfig
-gcc-libs
-glib2
-gtk2
+hicolor-icon-theme
 libfaketime
 libcups
 libgl
-pcre
 libice
-libmariadbclient
-libmng
-libpng12
 libsm
 libx11
-libxext
 libxrender
 libxml2-legacy
 libxslt
 postgresql-libs
 qt5-base
-qt5-x11extras
 zlib
 firejail
+gst-plugins-base
+unixodbc
+freetds
+libpulse
+mariadb-libs
+sane
+libxcomposite
+pcre
+)
+
+makedepends=(
+desktop-file-utils
 )
 
 prepare() {
@@ -77,4 +80,9 @@ package() {
 
 	# .desktop file
 	install -Dm644 opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop "${pkgdir}/usr/share/applications/dassault-systemes.draftsight.desktop"
+
+	# hacks to link bad so names
+	mkdir -p "${pkgdir}/usr/lib"
+	ln -s libpcre.so        "${pkgdir}/usr/lib/libpcre.so.3"
+	ln -s libmysqlclient.so "${pkgdir}/usr/lib/libmysqlclient.so.20"
 }
