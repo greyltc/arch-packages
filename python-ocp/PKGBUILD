@@ -96,6 +96,7 @@ _n_parallel_build_jobs=4
 #_opencascade_install_prefix="/opt/opencascade-cadquery/usr"
 _opencascade_install_prefix="/usr"
 
+
 pkgver() {
   local _git_describe="$(git -C OCP describe --tags)"
   local _git_describe="${_git_describe/-/+r}"

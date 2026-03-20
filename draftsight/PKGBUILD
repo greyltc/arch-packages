@@ -46,6 +46,7 @@ makedepends=(
 desktop-file-utils
 )
 
+
 prepare() {
 	# use our launcher in the .desktop file
 	sed -i 's|^Exec="/opt/dassault-systemes/DraftSight/Linux/DraftSight"|Exec=draftsight|g' opt/dassault-systemes/DraftSight/Resources/dassault-systemes_draftsight.desktop
